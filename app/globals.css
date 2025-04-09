@@ -3,44 +3,57 @@
 @tailwind utilities;
 
 :root {
-  --background: #F8F9FA;
-  --foreground: #2F3E46;
+  --background: #ffffff;
+  --foreground: #171717;
+  --primary: #fed835;
+  --secondary: #304fff;
+
+  --primary-accent: #e5c230;
+  --foreground-accent: #454545;
+  --hero-background: #f3f3f5;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #1A1B26;
-    --foreground: #F8F9FA;
-  }
+html {
+  @apply scroll-smooth;
 }
 
 body {
+  @apply text-lg;
+
   color: var(--foreground);
   background: var(--background);
-  font-family: 'Inter', sans-serif;
+  font-family: "Source Sans 3", sans-serif;
+  font-optical-sizing: auto;
+  font-style: normal;
 }
 
-/* Add some cooking-themed utility classes */
-@layer components {
-  .recipe-card {
-    @apply bg-white dark:bg-neutral-dark rounded-lg shadow-sm border border-primary/10 dark:border-primary/20 transition-all duration-300 hover:shadow-md;
-  }
-  
-  .cooking-button {
-    @apply bg-primary hover:bg-primary-dark text-white rounded-lg transition-all duration-300 transform hover:scale-102 active:scale-98;
-  }
-  
-  .accent-button {
-    @apply bg-secondary hover:bg-secondary-dark text-white rounded-lg transition-all duration-300;
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
   }
 }
 
-/* Hide scrollbar styles */
-.hide-scrollbar::-webkit-scrollbar {
-  display: none;
+.manrope {
+  font-family: "Manrope", sans-serif;
+  font-optical-sizing: auto;
+  font-style: normal;
 }
 
-.hide-scrollbar {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: "Manrope", sans-serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+}
+
+#logos svg {
+  @apply h-10 w-fit sm:h-12;
+}
+
+.benefit-section:last-of-type > div {
+  @apply mb-10;
 }

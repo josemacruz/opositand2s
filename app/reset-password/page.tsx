@@ -1,15 +1,15 @@
-'use client';
+"use client";
 
-import { useState, useEffect, Suspense } from 'react';
-import { useAuth } from '@/contexts/AuthContext';
-import { useSearchParams } from 'next/navigation';
-import LoadingSpinner from '@/components/LoadingSpinner';
+import { useState, useEffect, Suspense } from "react";
+import { useAuth } from "@/contexts/AuthContext";
+import { useSearchParams } from "next/navigation";
+import Loader from "@/components/ui/Loader/Loader";
 
 function ResetPasswordContent() {
   const { supabase } = useAuth();
   const searchParams = useSearchParams();
-  const email = searchParams.get('email');
-  const [error, setError] = useState('');
+  const email = searchParams.get("email");
+  const [error, setError] = useState("");
   const [success, setSuccess] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -22,9 +22,9 @@ function ResetPasswordContent() {
 
   const handleResetPassword = async () => {
     if (!email) return;
-    
+
     setIsLoading(true);
-    setError('');
+    setError("");
 
     try {
       const { error } = await supabase.auth.resetPasswordForEmail(email, {
@@ -33,7 +33,9 @@ function ResetPasswordContent() {
       if (error) throw error;
       setSuccess(true);
     } catch (error) {
-      setError(error instanceof Error ? error.message : 'Failed to send reset email');
+      setError(
+        error instanceof Error ? error.message : "Failed to send reset email"
+      );
     } finally {
       setIsLoading(false);
     }
@@ -46,7 +48,8 @@ function ResetPasswordContent() {
           <div className="text-center">
             <h2 className="text-3xl font-bold">Invalid Request</h2>
             <p className="mt-2 text-gray-600 dark:text-gray-300">
-              No email address provided. Please try the reset password link again.
+              No email address provided. Please try the reset password link
+              again.
             </p>
           </div>
         </div>
@@ -59,7 +62,7 @@ function ResetPasswordContent() {
       <div className="max-w-md w-full space-y-8">
         <div className="text-center">
           <h2 className="text-3xl font-bold">Reset Password</h2>
-          <p className="mt-2 text-gray-600 dark:text-gray-300">
+          <p className="mt-2 text-gray-600">
             Sending reset link to: <span className="font-medium">{email}</span>
           </p>
         </div>
@@ -77,12 +80,13 @@ function ResetPasswordContent() {
         )}
 
         {success ? (
-          <div className="bg-green-50 dark:bg-green-900/30 text-green-500 p-4 rounded-lg">
-            Reset link has been sent to your email address. Please check your inbox.
+          <div className="bg-green-50 text-green-500 p-4 rounded-lg">
+            Reset link has been sent to your email address. Please check your
+            inbox.
           </div>
         ) : (
-          <div className="text-center text-gray-600 dark:text-gray-300">
-            {isLoading ? 'Sending reset link...' : 'Processing your request...'}
+          <div className="text-center text-gray-600">
+            {isLoading ? "Sending reset link..." : "Processing your request..."}
           </div>
         )}
       </div>
@@ -92,8 +96,8 @@ function ResetPasswordContent() {
 
 export default function ResetPasswordPage() {
   return (
-    <Suspense fallback={<LoadingSpinner />}>
+    <Suspense fallback={<Loader />}>
       <ResetPasswordContent />
     </Suspense>
   );
-} 
+}
