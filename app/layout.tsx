@@ -1,15 +1,15 @@
-'use client';
+"use client";
 
-import { Geist } from "next/font/google";
+import { Source_Sans_3, Manrope } from "next/font/google";
 import "./globals.css";
-import { AuthProvider } from '@/contexts/AuthContext';
-import TopBar from '../components/TopBar';
-import ProtectedRoute from '@/contexts/ProtectedRoute';
-import { Analytics } from "@vercel/analytics/react"
-// import { PostHogProvider } from '@/contexts/PostHogContext';
-// import { PostHogErrorBoundary } from '@/components/PostHogErrorBoundary';
+import { AuthProvider } from "@/contexts/AuthContext";
+import ProtectedRoute from "@/contexts/ProtectedRoute";
+import { Analytics } from "@vercel/analytics/react";
+import Navbar from "@/components/ui/Navbar/Navbar";
+import ComingSoonLanding from "@/components/ui/CommingSoon/CommingSoon";
 
-const geist = Geist({ subsets: ['latin'] });
+const manrope = Manrope({ subsets: ["latin"] });
+const sourceSans = Source_Sans_3({ subsets: ["latin"] });
 
 export default function RootLayout({
   children,
@@ -18,18 +18,18 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={geist.className}>
+      <body
+        className={`${manrope.className} ${sourceSans.className} antialiased`}
+      >
+        <ComingSoonLanding />
+        {/*
         <Analytics mode="auto" />
-        {/* <PostHogErrorBoundary>
-          <PostHogProvider> */}
-            <AuthProvider>   
-                <ProtectedRoute>
-                  <TopBar />    
-                  <main>{children}</main>
-                </ProtectedRoute>
-            </AuthProvider>
-          {/* </PostHogProvider>
-        </PostHogErrorBoundary> */}
+        <AuthProvider>
+          <ProtectedRoute>
+            <Navbar />
+            <main className="pt-32">{children}</main>
+          </ProtectedRoute>
+        </AuthProvider>*/}
       </body>
     </html>
   );

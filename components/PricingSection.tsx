@@ -2,14 +2,14 @@
 
 // import Link from 'next/link';
 // import { StripeBuyButton } from './StripeBuyButton';
-import { motion } from 'framer-motion';
-import { CheckCircle2 } from 'lucide-react';
-import { useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { motion } from "framer-motion";
+import { CheckCircle2 } from "lucide-react";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
 
-// interface PricingSectionProps {
-//   showFullDetails?: boolean;
-// }
+interface PricingSectionProps {
+  showFullDetails?: boolean;
+}
 
 const pricingTiers = [
   {
@@ -23,10 +23,10 @@ const pricingTiers = [
       "Priority support",
       "Custom branding",
       "Analytics dashboard",
-      "Team collaboration"
+      "Team collaboration",
     ],
     cta: "Get Started",
-    popular: false
+    popular: false,
   },
   {
     id: "enterprise",
@@ -39,10 +39,10 @@ const pricingTiers = [
       "Advanced security",
       "Custom integrations",
       "24/7 support",
-      "SLA guarantee"
+      "SLA guarantee",
     ],
     cta: "Start Trial",
-    popular: true
+    popular: true,
   },
   {
     id: "custom",
@@ -55,11 +55,11 @@ const pricingTiers = [
       "Dedicated support",
       "Custom SLA",
       "On-premise options",
-      "Training sessions"
+      "Training sessions",
     ],
     cta: "Contact Sales",
-    popular: false
-  }
+    popular: false,
+  },
 ];
 
 export function PricingSection() {
@@ -67,12 +67,12 @@ export function PricingSection() {
   const [selectedTier, setSelectedTier] = useState<string | null>("enterprise");
 
   const handleTierClick = (tierId: string) => {
-    setSelectedTier(currentTier => currentTier === tierId ? null : tierId);
+    setSelectedTier((currentTier) => (currentTier === tierId ? null : tierId));
   };
 
   const handleCTAClick = (e: React.MouseEvent) => {
     e.stopPropagation();
-    router.push('/profile');
+    router.push("/profile");
   };
 
   return (
@@ -86,8 +86,8 @@ export function PricingSection() {
           onClick={() => handleTierClick(tier.id)}
           className={`relative rounded-2xl p-8 shadow-lg cursor-pointer transition-all duration-300 ${
             selectedTier === tier.id
-              ? 'bg-primary/5 dark:bg-primary/10 ring-2 ring-primary transform scale-105'
-              : 'bg-white dark:bg-slate-800 ring-1 ring-slate-200 dark:ring-slate-700 hover:ring-primary/50'
+              ? "bg-primary/5 dark:bg-primary/10 ring-2 ring-primary transform scale-105"
+              : "bg-white dark:bg-slate-800 ring-1 ring-slate-200 dark:ring-slate-700 hover:ring-primary/50"
           }`}
         >
           {/* Show Popular badge only for Enterprise tier */}
@@ -96,17 +96,27 @@ export function PricingSection() {
               Popular
             </span>
           )}
-          <h3 className="text-xl font-semibold text-slate-900 dark:text-white">{tier.name}</h3>
+          <h3 className="text-xl font-semibold text-slate-900 dark:text-white">
+            {tier.name}
+          </h3>
           <div className="mt-4 flex items-baseline">
-            <span className="text-4xl font-bold text-slate-900 dark:text-white">{tier.price}</span>
-            <span className="ml-1 text-slate-500 dark:text-slate-400">{tier.interval}</span>
+            <span className="text-4xl font-bold text-slate-900 dark:text-white">
+              {tier.price}
+            </span>
+            <span className="ml-1 text-slate-500 dark:text-slate-400">
+              {tier.interval}
+            </span>
           </div>
-          <p className="mt-4 text-slate-500 dark:text-slate-400">{tier.description}</p>
+          <p className="mt-4 text-slate-500 dark:text-slate-400">
+            {tier.description}
+          </p>
           <ul className="mt-8 space-y-4">
             {tier.features.map((feature) => (
               <li key={feature} className="flex items-center">
                 <CheckCircle2 className="h-5 w-5 text-primary mr-3" />
-                <span className="text-slate-600 dark:text-slate-300">{feature}</span>
+                <span className="text-slate-600 dark:text-slate-300">
+                  {feature}
+                </span>
               </li>
             ))}
           </ul>
@@ -116,8 +126,8 @@ export function PricingSection() {
             onClick={handleCTAClick}
             className={`mt-8 w-full py-3 px-4 rounded-lg text-center font-medium transition-colors ${
               selectedTier === tier.id
-                ? 'bg-primary text-white hover:bg-primary-dark'
-                : 'bg-slate-100 dark:bg-slate-700 text-slate-900 dark:text-white hover:bg-slate-200 dark:hover:bg-slate-600'
+                ? "bg-primary text-white hover:bg-primary-dark"
+                : "bg-slate-100 dark:bg-slate-700 text-slate-900 dark:text-white hover:bg-slate-200 dark:hover:bg-slate-600"
             }`}
           >
             {tier.cta}

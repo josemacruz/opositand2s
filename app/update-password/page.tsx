@@ -1,15 +1,15 @@
-'use client';
+"use client";
 
-import { useState, useEffect } from 'react';
-import { useAuth } from '@/contexts/AuthContext';
-import { useRouter } from 'next/navigation';
+import { useState, useEffect } from "react";
+import { useAuth } from "@/contexts/AuthContext";
+import { useRouter } from "next/navigation";
 
 export default function UpdatePasswordPage() {
   const { supabase } = useAuth();
   const router = useRouter();
-  const [newPassword, setNewPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
-  const [error, setError] = useState('');
+  const [newPassword, setNewPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [error, setError] = useState("");
   const [success, setSuccess] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -18,51 +18,55 @@ export default function UpdatePasswordPage() {
     const hash = window.location.hash;
     if (hash) {
       const hashParams = new URLSearchParams(hash.substring(1));
-      const accessToken = hashParams.get('access_token');
-      const refreshToken = hashParams.get('refresh_token');
-      const type = hashParams.get('type');
+      const accessToken = hashParams.get("access_token");
+      const refreshToken = hashParams.get("refresh_token");
+      const type = hashParams.get("type");
 
-      if (type === 'recovery' && accessToken) {
-        supabase.auth.setSession({
-          access_token: accessToken,
-          refresh_token: refreshToken || '',
-        }).then(({ error }) => {
-          if (error) {
-            setError('Failed to set session');
-          }
-        });
+      if (type === "recovery" && accessToken) {
+        supabase.auth
+          .setSession({
+            access_token: accessToken,
+            refresh_token: refreshToken ?? "",
+          })
+          .then(({ error }) => {
+            if (error) {
+              setError("Failed to set session");
+            }
+          });
       } else {
-        setError('Invalid recovery link');
+        setError("Invalid recovery link");
       }
     } else {
-      setError('Auth session missing!');
+      setError("Auth session missing!");
     }
   }, [supabase.auth]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (newPassword !== confirmPassword) {
-      setError('Passwords do not match');
+      setError("Passwords do not match");
       return;
     }
 
     setIsLoading(true);
-    setError('');
+    setError("");
 
     try {
       const { error } = await supabase.auth.updateUser({
-        password: newPassword
+        password: newPassword,
       });
 
       if (error) throw error;
-      
+
       setSuccess(true);
       // Redirect to login after successful password update
       setTimeout(() => {
-        router.push('/login');
+        router.push("/login");
       }, 2000);
     } catch (error) {
-      setError(error instanceof Error ? error.message : 'Failed to update password');
+      setError(
+        error instanceof Error ? error.message : "Failed to update password"
+      );
     } finally {
       setIsLoading(false);
     }
@@ -129,11 +133,11 @@ export default function UpdatePasswordPage() {
               disabled={isLoading}
               className="w-full flex justify-center py-2 px-4 border border-transparent rounded-lg shadow-sm text-white bg-primary-darker hover:bg-blue-700 disabled:opacity-50"
             >
-              {isLoading ? 'Updating...' : 'Update Password'}
+              {isLoading ? "Updating..." : "Update Password"}
             </button>
           </form>
         )}
       </div>
     </div>
   );
-} 
+}

@@ -1,23 +1,26 @@
-'use client';
+"use client";
 
-import { useEffect } from 'react';
-import { useAuth } from '@/contexts/AuthContext';
-import {usePathname } from 'next/navigation';
-// import { useRouter, usePathname } from 'next/navigation';
+import { useEffect } from "react";
+import { useAuth } from "@/contexts/AuthContext";
+import { usePathname } from "next/navigation";
+import Loader from "@/components/ui/Loader/Loader";
 
 // List of public routes that don't require authentication
 const PUBLIC_ROUTES = [
-  '/',  // Add landing page
-  '/login', 
-  '/signup', 
-  '/verify-email', 
-  '/reset-password', 
-  '/update-password'
+  "/", // Add landing page
+  "/login",
+  "/signup",
+  "/verify-email",
+  "/reset-password",
+  "/update-password",
 ];
 
-export default function ProtectedRoute({ children }: { children: React.ReactNode }) {
+export default function ProtectedRoute({
+  children,
+}: {
+  readonly children: React.ReactNode;
+}) {
   const { user, isLoading } = useAuth();
-  // const router = useRouter();
   const pathname = usePathname();
 
   useEffect(() => {
@@ -29,12 +32,7 @@ export default function ProtectedRoute({ children }: { children: React.ReactNode
 
   // Show loading state only if actually loading
   if (isLoading) {
-    return (
-      <div className="min-h-screen flex flex-col space-y-4 items-center justify-center">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-gray-900"></div>
-        <div>Loading at lightspeed ⚡️</div>
-      </div>
-    );
+    return <Loader />;
   }
 
   // Only render children if we're on a public route or user is authenticated
@@ -43,4 +41,4 @@ export default function ProtectedRoute({ children }: { children: React.ReactNode
   }
 
   return null;
-} 
+}
