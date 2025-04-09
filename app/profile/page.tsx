@@ -1,21 +1,17 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useAuth } from "@/contexts/AuthContext";
 import { useSubscription } from "@/hooks/useSubscription";
 import Link from "next/link";
 import { AccountManagement } from "@/components/AccountManagement";
 import { ErrorBoundary } from "react-error-boundary";
-import { Suspense } from "react";
-import LoadingSpinner from "@/components/LoadingSpinner";
 import { StripeBuyButton } from "@/components/StripeBuyButton";
 import { useTrialStatus } from "@/hooks/useTrialStatus";
 import Loader from "@/components/ui/Loader/Loader";
 import UserInfoCard from "@/components/ui/UserInfoCard/UserInfoCard";
 import SubscriptionCard from "@/components/ui/SubscriptionCard/SubscriptionCard";
-// import { PricingSection } from '@/components/PricingSection';
-// import { StripeBuyButton } from '@/components/StripeBuyButton';
 
 function ProfileContent() {
   const { user } = useAuth();

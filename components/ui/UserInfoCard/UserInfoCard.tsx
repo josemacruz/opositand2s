@@ -11,30 +11,18 @@ interface UserInfoCardProps {
 }
 
 export default function UserInfoCard({ user }: UserInfoCardProps) {
-  const [newEmail, setNewEmail] = useState("");
-  const [newPassword, setNewPassword] = useState("");
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
 
   const provider = user?.app_metadata?.provider;
 
   const router = useRouter();
 
-  const handleChangeEmail = async () => {
-    console.log("Nuevo email:", newEmail);
-    // TODO: Supabase update email
-  };
-
-  const handleChangePassword = async () => {
-    console.log("Nueva contraseña:", newPassword);
-    // TODO: Supabase update password
-  };
-
   return (
     <section className="bg-white shadow-md rounded-2xl p-6">
       <h2 className="text-xl font-semibold mb-4">Tu cuenta</h2>
       <div className="flex items-center gap-4">
         <Image
-          src={user.user_metadata?.avatar_url || "/logo_dragon.svg"}
+          src={user.user_metadata?.avatar_url ?? "/logo_dragon.svg"}
           alt="Avatar"
           className="w-16 h-16 rounded-full border"
           width={64}

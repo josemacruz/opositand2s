@@ -51,31 +51,6 @@ const TestPage = () => {
     }
   }, []);
 
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setTimeLeft((prev) => {
-        if (prev <= 1) {
-          clearInterval(timer);
-          alert("⏱ Tiempo agotado. El test ha finalizado.");
-          finishTest();
-          return 0;
-        }
-        return prev - 1;
-      });
-    }, 1000);
-    return () => clearInterval(timer);
-  }, []);
-
-  const handleAnswer = (questionId: number, index: number) => {
-    setAnswers((prev) => ({ ...prev, [questionId]: index }));
-  };
-
-  const formatTime = (seconds: number) => {
-    const m = Math.floor(seconds / 60);
-    const s = seconds % 60;
-    return `${m}:${s.toString().padStart(2, "0")}`;
-  };
-
   const finishTest = () => {
     if (!attemptsSaved) {
       const now = new Date().toISOString();
@@ -89,7 +64,7 @@ const TestPage = () => {
           selected_option: selected ?? -1,
         };
       });
-      const prev = JSON.parse(localStorage.getItem("userAttempts") || "[]");
+      const prev = JSON.parse(localStorage.getItem("userAttempts") ?? "[]");
       localStorage.setItem(
         "userAttempts",
         JSON.stringify([...prev, ...attempts])
@@ -97,6 +72,32 @@ const TestPage = () => {
       setAttemptsSaved(true);
     }
     setCurrentIndex(questions.length);
+  };
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setTimeLeft((prev) => {
+        if (prev <= 1) {
+          clearInterval(timer);
+          alert("⏱ Tiempo agotado. El test ha finalizado.");
+          finishTest();
+          return 0;
+        }
+        return prev - 1;
+      });
+    }, 1000);
+    return () => clearInterval(timer);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const handleAnswer = (questionId: number, index: number) => {
+    setAnswers((prev) => ({ ...prev, [questionId]: index }));
+  };
+
+  const formatTime = (seconds: number) => {
+    const m = Math.floor(seconds / 60);
+    const s = seconds % 60;
+    return `${m}:${s.toString().padStart(2, "0")}`;
   };
 
   const currentQuestion = questions[currentIndex];

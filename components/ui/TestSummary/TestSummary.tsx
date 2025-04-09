@@ -25,8 +25,20 @@ const TestSummary: React.FC<Props> = ({ questions, answers }) => {
     return selected !== null && q.options[selected]?.is_correct;
   }).length;
 
-  const attempts = JSON.parse(localStorage.getItem("userAttempts") || "[]");
+  const attempts = JSON.parse(localStorage.getItem("userAttempts") ?? "[]");
   const lastTest = attempts.slice(-questions.length);
+
+  const getResultIcon = (
+    selected: number | undefined,
+    result: boolean | undefined
+  ) => {
+    if (selected === -1) return "-";
+    return result ? (
+      <span className="text-green-600">✔</span>
+    ) : (
+      <span className="text-red-600">✖</span>
+    );
+  };
 
   return (
     <div className="p-4">
@@ -49,7 +61,13 @@ const TestSummary: React.FC<Props> = ({ questions, answers }) => {
           </thead>
           <tbody>
             {questions.map((q, idx) => {
-              const attempt = lastTest.find((a: any) => a.question_id === q.id);
+              const attempt = lastTest.find(
+                (a: {
+                  question_id: number;
+                  selected_option: number;
+                  is_correct: boolean;
+                }) => a.question_id === q.id
+              );
               const selected = attempt?.selected_option;
               const result = attempt?.is_correct;
               return (
@@ -64,13 +82,7 @@ const TestSummary: React.FC<Props> = ({ questions, answers }) => {
                       : "Sin responder"}
                   </td>
                   <td className="border px-2 py-1 font-semibold">
-                    {selected === -1 ? (
-                      "-"
-                    ) : result ? (
-                      <span className="text-green-600">✔</span>
-                    ) : (
-                      <span className="text-red-600">✖</span>
-                    )}
+                    {getResultIcon(selected, result)}
                   </td>
                 </tr>
               );

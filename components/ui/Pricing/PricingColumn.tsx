@@ -1,8 +1,14 @@
 import clsx from "clsx";
 import { BsFillCheckCircleFill } from "react-icons/bs";
 
+interface PricingTier {
+  name: string;
+  price: number | string;
+  features: string[];
+}
+
 interface Props {
-  tier: any;
+  tier: PricingTier;
   highlight?: boolean;
 }
 
