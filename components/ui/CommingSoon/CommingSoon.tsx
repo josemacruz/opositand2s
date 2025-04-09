@@ -52,7 +52,7 @@ export default function ComingSoonLanding() {
       </div>
       <header className="fixed left-0 right-0 top-0 z-50 mx-auto w-full bg-transparent md:absolute ">
         <div className="mx-auto w-full max-w-7xl px-5">
-          <div className="mx-auto flex items-center justify-center bg-white px-5 py-2 shadow-md md:bg-transparent md:py-10 md:shadow-none">
+          <div className="mx-auto flex items-center justify-center px-5 py-2 bg-transparent md:py-10 md:shadow-none">
             <Image
               src="/logo_opositandos.png"
               alt="Opositandos Logo"
